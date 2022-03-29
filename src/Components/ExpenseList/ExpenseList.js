@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeDat } from "react";
 import { ExpenseCard } from "./ExpenseCard";
 import api from '../../axios/myapi'
-import { setApiDatatoRedux } from "../../Containers/action";
+import { setApiDatatoRedux, setDefaultData, setUserStates , setApiDefaultData } from "../../Containers/action";
+import { AddTransaction } from "../AddTransaction/AddTransaction";
 
 
 export const ExpenseList = ()=>{
@@ -11,14 +12,18 @@ export const ExpenseList = ()=>{
 
 
     const dispatch = useDispatch()
-    
-    useEffect(()=>{
 
+         const index =  localStorage.getItem('index')
+
+
+
+    useEffect(()=>{
         const retrievedata = async ()=>{
             const response = await api.get('/data').catch((e)=> console.log('our console',e));
             console.log(response)
             if(response){
-                dispatch(setApiDatatoRedux(response.data))
+                dispatch(setApiDefaultData(response.data))
+                dispatch(setUserStates(index))
             }
         }
         retrievedata()
@@ -27,6 +32,7 @@ export const ExpenseList = ()=>{
 
 
     const stateData = useSelector((state)=> state.ChangeData)
+    console.log( "redux ka data", stateData.data)
 
 
     return<>
@@ -34,6 +40,8 @@ export const ExpenseList = ()=>{
         {stateData.data.map((val)=>{
             return <ExpenseCard key={val.id} id={val.id} detail={val.detail} amount={val.amount}></ExpenseCard>
         })}
+
+        <AddTransaction></AddTransaction>
         </>
 
 }

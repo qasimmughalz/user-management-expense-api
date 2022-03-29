@@ -6,9 +6,11 @@ const initialState = {
     details:'',
     amount:0,
     data:[
-        
     ],
-    edit:false
+    updatebtn:false,
+    edit:false,
+    ApiData: []
+
 }
 
 
@@ -23,7 +25,8 @@ export const ChangeData = (state = initialState, action)=>{
                 ...state,
                 id:result[0].id,
                 details: result[0].detail,
-                amount:result[0].amount    
+                amount:result[0].amount ,
+                updatebtn:true   
             }
         case 'UpdateDetailInput':
             return{
@@ -31,6 +34,11 @@ export const ChangeData = (state = initialState, action)=>{
                 details: action.payload,
                 amount:0               
             }
+        case 'setUserStates':
+               return{
+                   ...state,
+                    data: state.ApiData[action.payload].record        
+               }
         case 'setApiDatatoRedux':
         return{
             ...state,
@@ -43,6 +51,19 @@ export const ChangeData = (state = initialState, action)=>{
                     details: '',
                     amount:0               
           }
+        case 'setApiDefaultData':
+            if(state.current != 0 ){
+                return{
+                    ...state,
+                    current: state.current,
+                    ApiData: action.payload    
+                }
+            }else{
+                return{
+                    ...state,
+                    ApiData: action.payload    
+                }
+            }
         case 'handleDetailInput':
             console.log('dispatch', action.payload)
             console.log('details before', action.payload)
@@ -71,7 +92,8 @@ export const ChangeData = (state = initialState, action)=>{
             myarr[check].amount = state.amount
             return{
                 ...state,
-                data: myarr
+                data: myarr,
+                updatebtn:false
             }
         case 'DeleteTransaction':
                 return{

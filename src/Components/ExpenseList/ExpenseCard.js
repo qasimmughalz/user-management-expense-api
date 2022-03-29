@@ -30,6 +30,11 @@ export const ExpenseCard=({id,detail,amount})=>{
 
     function handleUpdate(id){
         console.log('chnge wale ki id', id)
+
+
+        
+
+        
         dispatch(setUpdateValues(id))
     }
 

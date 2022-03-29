@@ -64,3 +64,19 @@ export const setApiDatatoRedux = (data)=>{
       
     }
 }
+
+
+export const setApiDefaultData = (data)=>{
+    return{
+        type:'setApiDefaultData',
+        payload:data
+    }
+}
+
+
+export const setUserStates = (data)=>{
+    return{
+        type:'setUserStates',
+        payload:data
+    }
+}
